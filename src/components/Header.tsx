@@ -1,8 +1,17 @@
 'use client';
 
 import Link from 'next/link';
+import { useCartStore } from '@/stores/cartStore';
+import { useEffect, useState } from 'react';
 
 export default function Header() {
+  const [mounted, setMounted] = useState(false);
+  const itemCount = useCartStore((state) => state.getItemCount());
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <header className="sticky top-0 z-50 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 shadow-lg">
       <div className="max-w-[480px] mx-auto px-4 py-4 flex items-center justify-between">
@@ -17,6 +26,11 @@ export default function Header() {
           className="relative bg-white/20 hover:bg-white/30 transition-colors rounded-full p-2"
         >
           <span className="text-2xl">🛒</span>
+          {mounted && itemCount > 0 && (
+            <span className="absolute -top-1 -right-1 bg-yellow-400 text-purple-800 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+              {itemCount}
+            </span>
+          )}
         </Link>
       </div>
     </header>
