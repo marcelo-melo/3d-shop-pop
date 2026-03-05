@@ -43,10 +43,18 @@ Prisma 7 includes a local PostgreSQL dev server:
 npx prisma dev  # Starts local Postgres on ports 51213-51215
 ```
 
-### Production (Neon/Vercel Postgres)
-1. Create a database at [Neon](https://neon.tech) or [Vercel Postgres](https://vercel.com/storage/postgres)
-2. Add `DATABASE_URL` to your Vercel environment variables
-3. Run migrations: `npx prisma migrate deploy`
+### Production (Neon - Free Tier)
+1. Create account at [Neon](https://neon.tech)
+2. Create a new project (e.g., "3d-shop-pop")
+3. Copy the connection string (starts with `postgres://`)
+4. Add to Vercel: `npx vercel env add DATABASE_URL production`
+5. Paste your Neon connection string
+6. Deploy: `npx vercel --prod`
+7. Run migrations via Prisma Studio or locally:
+   ```bash
+   DATABASE_URL="your-neon-url" npx prisma migrate deploy
+   DATABASE_URL="your-neon-url" npx prisma db seed
+   ```
 
 ## Project Structure
 
