@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 3D Shop Pop 🎨
+
+Loja virtual para venda de produtos impressos em 3D — brinquedos, miniaturas, chaveiros e mais.
+
+## Stack
+
+- **Frontend:** Next.js 14 + React 18 + TypeScript + Tailwind CSS
+- **Backend:** Next.js API Routes
+- **Database:** PostgreSQL via Prisma ORM
+- **Payments:** Stripe (Checkout, Apple Pay, Google Pay)
+- **State:** Zustand (cart) + React Hook Form + Zod
+- **Animations:** Framer Motion
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Setup environment variables
+cp .env.example .env
+# Edit .env with your values
+
+# Setup database
+npx prisma generate
+npx prisma db push
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the store.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+  app/
+    page.tsx                 — Home/Catalog
+    product/[id]/page.tsx    — Product detail
+    cart/page.tsx            — Shopping cart
+    checkout/page.tsx        — Checkout
+    success/page.tsx         — Order confirmation
+    admin/                   — Admin panel
+  components/
+    ui/                      — Reusable UI components
+    features/                — Feature-specific components
+  lib/
+    cart.ts                  — Zustand cart store
+    prisma.ts                — Prisma client
+```
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+- **Catalog:** Browse 3D printed products
+- **Cart:** Add/remove items, persistent via localStorage
+- **Checkout:** Guest checkout with Stripe
+- **Shipping:** Pickup or flat-rate shipping
+- **Admin:** Simple product management (password-protected)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See `.env.example` for required variables.
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Private project.
