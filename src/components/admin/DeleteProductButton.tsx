@@ -39,9 +39,9 @@ export default function DeleteProductButton({ productId, productName }: DeletePr
     <button
       onClick={handleDelete}
       disabled={loading}
-      className="text-red-600 hover:underline disabled:opacity-50"
+      className="flex-1 text-center bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 transition-colors font-medium disabled:opacity-50"
     >
-      {loading ? 'Deletando...' : 'Deletar'}
+      {loading ? '...' : '🗑️ Deletar'}
     </button>
   );
 }

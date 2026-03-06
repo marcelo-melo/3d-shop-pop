@@ -35,59 +35,46 @@ export default async function AdminOrdersPage() {
     <div>
       <h1 className="text-2xl font-bold text-gray-800 mb-6">Pedidos</h1>
 
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-200">
-            <tr>
-              <th className="text-left px-6 py-3 text-sm font-medium text-gray-500">ID</th>
-              <th className="text-left px-6 py-3 text-sm font-medium text-gray-500">Cliente</th>
-              <th className="text-left px-6 py-3 text-sm font-medium text-gray-500">Email</th>
-              <th className="text-left px-6 py-3 text-sm font-medium text-gray-500">Total</th>
-              <th className="text-left px-6 py-3 text-sm font-medium text-gray-500">Status</th>
-              <th className="text-left px-6 py-3 text-sm font-medium text-gray-500">Data</th>
-              <th className="text-right px-6 py-3 text-sm font-medium text-gray-500">Ações</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {orders.length === 0 ? (
-              <tr>
-                <td colSpan={7} className="px-6 py-8 text-center text-gray-500">
-                  Nenhum pedido encontrado.
-                </td>
-              </tr>
-            ) : (
-              orders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 text-gray-500 font-mono text-sm">
-                    {order.id.slice(0, 8)}...
-                  </td>
-                  <td className="px-6 py-4 text-gray-900">{order.customerName}</td>
-                  <td className="px-6 py-4 text-gray-600">{order.customerEmail}</td>
-                  <td className="px-6 py-4 text-gray-900 font-medium">
-                    ${(order.total / 100).toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${statusColors[order.status]}`}>
-                      {statusLabels[order.status]}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-gray-600">
-                    {new Date(order.createdAt).toLocaleDateString('pt-BR')}
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <Link
-                      href={`/admin/orders/${order.id}`}
-                      className="text-blue-600 hover:underline"
-                    >
-                      Ver Detalhes
-                    </Link>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+      {orders.length === 0 ? (
+        <div className="bg-white rounded-lg shadow-sm p-8 text-center text-gray-500">
+          Nenhum pedido encontrado.
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {orders.map((order) => (
+            <Link
+              key={order.id}
+              href={`/admin/orders/${order.id}`}
+              className="block bg-white rounded-lg shadow-sm p-4 hover:shadow-md transition-shadow"
+            >
+              <div className="flex justify-between items-start mb-2">
+                <div>
+                  <h3 className="font-semibold text-gray-900">{order.customerName}</h3>
+                  <p className="text-sm text-gray-500">{order.customerEmail}</p>
+                </div>
+                <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${statusColors[order.status]}`}>
+                  {statusLabels[order.status]}
+                </span>
+              </div>
+              
+              <div className="flex justify-between items-center pt-2 border-t border-gray-100">
+                <span className="text-sm text-gray-500">
+                  {new Date(order.createdAt).toLocaleDateString('pt-BR')}
+                </span>
+                <span className="text-lg font-bold text-green-600">
+                  ${(order.total / 100).toFixed(2)}
+                </span>
+              </div>
+              
+              <div className="text-right mt-2">
+                <span className="text-blue-600 text-sm font-medium">
+                  Ver Detalhes →
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -14,14 +14,12 @@ export default function AdminLayout({
 }) {
   return (
     <div className="bg-gray-100 min-h-screen">
-      <div className="flex">
-        <AdminSidebar />
-        <div className="flex-1 ml-64">
-          <AdminHeader />
-          <main className="p-6">
-            {children}
-          </main>
-        </div>
+      <AdminSidebar />
+      <div className="lg:ml-64">
+        <AdminHeader />
+        <main className="p-4 lg:p-6 pt-16 lg:pt-6">
+          {children}
+        </main>
       </div>
     </div>
   );

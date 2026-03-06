@@ -21,72 +21,64 @@ export default async function AdminProductsPage() {
           href="/admin/products/new"
           className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
         >
-          + Novo Produto
+          + Novo
         </Link>
       </div>
 
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-200">
-            <tr>
-              <th className="text-left px-6 py-3 text-sm font-medium text-gray-500">Imagem</th>
-              <th className="text-left px-6 py-3 text-sm font-medium text-gray-500">Nome</th>
-              <th className="text-left px-6 py-3 text-sm font-medium text-gray-500">Preço</th>
-              <th className="text-left px-6 py-3 text-sm font-medium text-gray-500">Ativo</th>
-              <th className="text-right px-6 py-3 text-sm font-medium text-gray-500">Ações</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {products.length === 0 ? (
-              <tr>
-                <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
-                  Nenhum produto cadastrado.
-                </td>
-              </tr>
-            ) : (
-              products.map((product) => (
-                <tr key={product.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4">
-                    {product.imageUrl ? (
-                      <img
-                        src={product.imageUrl}
-                        alt={product.name}
-                        className="w-12 h-12 object-cover rounded"
-                      />
-                    ) : (
-                      <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-gray-400">
-                        📷
-                      </div>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 text-gray-900">{product.name}</td>
-                  <td className="px-6 py-4 text-gray-900">
+      {products.length === 0 ? (
+        <div className="bg-white rounded-lg shadow-sm p-8 text-center text-gray-500">
+          Nenhum produto cadastrado.
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {products.map((product) => (
+            <div key={product.id} className="bg-white rounded-lg shadow-sm p-4">
+              <div className="flex gap-4">
+                {/* Image */}
+                <div className="flex-shrink-0">
+                  {product.imageUrl ? (
+                    <img
+                      src={product.imageUrl}
+                      alt={product.name}
+                      className="w-16 h-16 object-cover rounded-lg"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center text-2xl">
+                      📷
+                    </div>
+                  )}
+                </div>
+                
+                {/* Info */}
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-gray-900 truncate">{product.name}</h3>
+                  <p className="text-lg font-bold text-green-600">
                     ${(product.price / 100).toFixed(2)}
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                      product.active
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {product.active ? 'Ativo' : 'Inativo'}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-right space-x-2">
-                    <Link
-                      href={`/admin/products/${product.id}/edit`}
-                      className="text-blue-600 hover:underline"
-                    >
-                      Editar
-                    </Link>
-                    <DeleteProductButton productId={product.id} productName={product.name} />
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+                  </p>
+                  <span className={`inline-flex px-2 py-0.5 text-xs font-medium rounded-full ${
+                    product.active
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-red-100 text-red-800'
+                  }`}>
+                    {product.active ? 'Ativo' : 'Inativo'}
+                  </span>
+                </div>
+              </div>
+              
+              {/* Actions */}
+              <div className="flex gap-2 mt-4 pt-4 border-t border-gray-100">
+                <Link
+                  href={`/admin/products/${product.id}/edit`}
+                  className="flex-1 text-center bg-blue-50 text-blue-600 px-4 py-2 rounded-lg hover:bg-blue-100 transition-colors font-medium"
+                >
+                  ✏️ Editar
+                </Link>
+                <DeleteProductButton productId={product.id} productName={product.name} />
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
