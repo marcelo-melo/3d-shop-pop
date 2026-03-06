@@ -7,21 +7,13 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient() {
-  const dbUrl = process.env.DATABASE_URL_TCP || process.env.DATABASE_URL;
+  const dbUrl = process.env.DATABASE_URL;
+  if (!dbUrl) throw new Error('DATABASE_URL is required');
   
-  if (!dbUrl) {
-    throw new Error('DATABASE_URL or DATABASE_URL_TCP is required');
-  }
-  
-  // If URL starts with prisma+postgres, it's Prisma Accelerate
-  if (dbUrl.startsWith('prisma+postgres://')) {
-    return new PrismaClient({
-      accelerateUrl: dbUrl,
-    });
-  }
-  
-  // Otherwise use pg adapter for direct connection
-  const pool = new pg.Pool({ connectionString: dbUrl });
+  const pool = new pg.Pool({
+    connectionString: dbUrl,
+    ssl: { rejectUnauthorized: false },
+  });
   const adapter = new PrismaPg(pool);
   return new PrismaClient({ adapter });
 }
